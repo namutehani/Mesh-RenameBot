@@ -122,6 +122,8 @@ class FilterUtils:
         # Remove First
         for i in remove_filters:
             original_name = original_name.replace(i[1], "")
+            split_string = original_name.split("@", 1)
+            original_name = split_string[0]
             
         # Replace second
         for i in replace_filters:
