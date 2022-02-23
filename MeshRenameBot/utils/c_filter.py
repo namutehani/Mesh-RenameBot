@@ -121,10 +121,19 @@ class FilterUtils:
             
         # Remove First
         for i in remove_filters:
-            substring = original_name.replace(i[1], "")
+            if original_name.rfind("@") < 0:
+                split_string = original_name.split("@",1)
+                substring = split_string[0]
+            else:
+                substring = i[1] + original_name
         # Replace second
         for i in replace_filters:
-            substring = original_name.replace(i[1], i[2])
+            if original_name.rfind("@") < 0:
+                split_string = original_name.split("@",1)
+                substring = split_string[0]
+            else:
+                substring = i[1] + original_name
+                
 
         # Addition At the last.
         for i in add_filters:
