@@ -84,7 +84,7 @@ class RenameManeuver(DefaultManeuver):
 
                 else:
                     original_file_name = "no_name"
-                new_file_name = await self._fltr_obj.filtered_name(original_file_name)
+                #new_file_name = await self._fltr_obj.filtered_name(original_file_name)
                 if original_file_name == new_file_name:
                     await self._cmd_message.reply_text(Trans.RENAME_NO_FILTER_MATCH)
                     return
