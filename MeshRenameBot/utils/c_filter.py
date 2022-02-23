@@ -121,23 +121,28 @@ class FilterUtils:
             
         # Remove First
         for i in remove_filters:
-            original_name = original_name.replace(i[1], "")
-            split_string = original_name.split("@", 1)
-            original_name = split_string[0]
-            
+            substring = original_name.replace(i[1], "")
         # Replace second
         for i in replace_filters:
-            original_name = original_name.replace(i[1], i[2])
+            substring = original_name.replace(i[1], i[2])
 
         # Addition At the last.
         for i in add_filters:
             if i[2] == self.ADDITION_FILTER_LEFT:
-                original_name = i[1] + original_name
+                if original_name.rfind("@") < 0:
+                    split_string = original_name.split("@",1)
+                    substring = split_string[0]
+                else:
+                    substring = i[1] + original_name
                 
             if i[2] == self.ADDITION_FILTER_RIGHT:
-                original_name += i[1]
+                if original_name.rfind("@") < 0:
+                    split_string = original_name.split("@",1)
+                    substring = split_string[0]
+                else:
+                    substring += i[1]
 
-        return original_name
+        return substring
 
 
 async def filter_controller(client: Client, msg: types.MessageEntity, is_edit: bool = False) -> None:
