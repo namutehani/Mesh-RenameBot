@@ -62,13 +62,13 @@ class RenameManeuver(DefaultManeuver):
                 original_file_name = self._media_message.document.file_name
                 if original_file_name.rfind("@") > 0:
                     split_string = original_file_name.split("@",1)
-                    original_file_name = split_string[0]
-                    original_file_name = i[1] + original_file_name
-                    new_file_name = original_file_name
+                    original_file_name2 = split_string[0]
+                    original_file_name1 = i[1] + original_file_name2
+                    new_file_name = original_file_name1
                 else:
                     original_file_name = self._media_message.document.file_name
-                    original_file_name = i[1] + original_file_name
-                    new_file_name = original_file_name
+                    original_file_name1 = i[1] + original_file_name
+                    new_file_name = original_file_name1
                 
         except Exception as e:
             print(e)
@@ -78,9 +78,14 @@ class RenameManeuver(DefaultManeuver):
                     original_file_name = self._media_message.document.file_name
                     if original_file_name.rfind("@") > 0:
                         split_string = original_file_name.split("@",1)
-                        original_file_name = split_string[0]
+                        new_file_name = split_string[0]
+                        new_file_name += "@tayfaykspdf.pdf"
+
                     else:
                         original_file_name = self._media_message.document.file_name
+                        split_string = original_file_name.split(".",1)
+                        new_file_name = split_string[0]
+                        new_file_name += "@tayfaykspdf.pdf"
 
                 else:
                     original_file_name = "no_name"
