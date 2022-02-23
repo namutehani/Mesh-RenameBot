@@ -261,9 +261,9 @@ class RenameManeuver(DefaultManeuver):
             else:
                 rmsg = await self._client.send_document(
                     self._cmd_message.chat.id,
-                    ndl_path,
+                    new_name,
                     thumb=thumb_path,
-                    caption=new_file_name,
+                    caption="deneme",
                     force_document=is_force,
                     progress=progress_for_pyrogram,
                     progress_args=(
