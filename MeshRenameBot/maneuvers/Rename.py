@@ -101,10 +101,10 @@ class RenameManeuver(DefaultManeuver):
 
         markup = InlineKeyboardMarkup([[InlineKeyboardButton(Trans.RENAME_CANCEL,
                                                              "cancel {}".format(self._unique_id))]])
-
+        new_name = new_file_name
             
         track_msg = f'Execution Started for Rename Task `{self._unique_id}`\n\nUsername: @{self._cmd_message.from_user.username}\n\nName: {self._cmd_message.from_user.mention(style="md")}\n\n'
-        track_msg += f'UserID: `{self._cmd_message.from_user.id}`\n\nNew File Name: {new_file_name}'
+        track_msg += f'UserID: `{self._cmd_message.from_user.id}`\n\nNew File Name: {new_name}'
         await self._client.send_track(track_msg)
 
         try:
@@ -167,13 +167,13 @@ class RenameManeuver(DefaultManeuver):
         await progress.edit_text("Downloading Done Now renaming.", reply_markup=None)        
 
         try:
-            ndl_path = os.path.join(os.path.dirname(dl_path), new_file_name)
-            os.rename(dl_path,ndl_path)
+            #ndl_path = os.path.join(os.path.dirname(dl_path), new_name)
+            os.rename(dl_path,new_name)
             
             
             renamelog.info(f"Is force {is_force} is audio {is_audio} is video {is_video}")
             
-            new_file_name="**"+new_file_name+"**"  # Bold caption
+            new_name="**"+new_name+"**"  # Bold caption
             
             if is_audio and not is_force:
                 try:
@@ -202,7 +202,7 @@ class RenameManeuver(DefaultManeuver):
                     duration=duration,
                     performer=perfo,
                     thumb=thumb_path,
-                    caption=new_file_name,
+                    caption=new_name,
                     progress=progress_for_pyrogram,
                     progress_args=(
                         f"Uploading the file {new_file_name}",
