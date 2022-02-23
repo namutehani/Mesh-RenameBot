@@ -58,25 +58,33 @@ class RenameManeuver(DefaultManeuver):
             is_audio = True
 
         try:
-            new_file_name = self._cmd_message.text.split(" ", 1)[1]
+            if self._media_message.document is not None:
+                original_file_name = self._media_message.document.file_name
+                if original_file_name.rfind("@") > 0:
+                    split_string = original_file_name.split("@",1)
+                    original_file_name = split_string[0]
+                    original_file_name = i[1] + original_file_name
+                    new_file_name = original_file_name
+                else:
+                    original_file_name = self._media_message.document.file_name
+                    original_file_name = i[1] + original_file_name
+                    new_file_name = original_file_name
+                
         except Exception as e:
             print(e)
             if self._fltr_obj.has_filters():
                 
                 if self._media_message.document is not None:
                     original_file_name = self._media_message.document.file_name
-                elif self._media_message.video is not None:
-                    original_file_name = self._media_message.video.file_name
-                elif self._media_message.audio is not None or self._media_message.voice is not None:
-                    original_file_name = self._media_message.audio.file_name
-                else:
-                    original_file_name = "no_name"
-                def no_filigran(self,original_file_name: str) ->:
                     if original_file_name.rfind("@") > 0:
                         split_string = original_file_name.split("@",1)
                         original_file_name = split_string[0]
-                yeni_name = await self.no_filigran(original_file_name)
-                new_file_name = await self._fltr_obj.filtered_name(yeni_name)
+                    else:
+                        original_file_name = self._media_message.document.file_name
+
+                else:
+                    original_file_name = "no_name"
+                new_file_name = await self._fltr_obj.filtered_name(original_file_name)
                 if original_file_name == new_file_name:
                     await self._cmd_message.reply_text(Trans.RENAME_NO_FILTER_MATCH)
                     return
