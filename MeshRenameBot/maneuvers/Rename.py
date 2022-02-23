@@ -69,9 +69,14 @@ class RenameManeuver(DefaultManeuver):
                     original_file_name = self._media_message.video.file_name
                 elif self._media_message.audio is not None or self._media_message.voice is not None:
                     original_file_name = self._media_message.audio.file_name
+                                if original_name.rfind("@") < 0:
+                    split_string = original_name.split("@",1)
+                    original_name = split_string[0]
                 else:
                     original_file_name = "no_name"
-                
+                if original_file_name.rfind("@") > 0:
+                    split_string = original_name.split("@",1)
+                    original_file_name = split_string[0]
                 new_file_name = await self._fltr_obj.filtered_name(original_file_name)
                 if original_file_name == new_file_name:
                     await self._cmd_message.reply_text(Trans.RENAME_NO_FILTER_MATCH)
